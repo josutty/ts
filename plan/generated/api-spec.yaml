@@ -1,0 +1,400 @@
+openapi: 3.0.3
+info:
+  title: VECV Fleet Intelligence API
+  version: 0.1.0
+  description: Proposed hybrid API contract generated from the fleet intelligence dataflow.
+servers:
+  - url: /
+security:
+  - bearerAuth: []
+paths:
+  /api/auth/login:
+    post:
+      operationId: loginUser
+      tags: [auth]
+      summary: Authenticate a fleet user
+      x-mock: true
+      x-proposed: true
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authenticated session
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Session'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/vehicles:
+    get:
+      operationId: listVehicles
+      tags: [vehicle]
+      summary: List the approved vehicle catalog
+      x-mock: true
+      x-proposed: true
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema: { type: string }
+        - name: category
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        '200':
+          description: Vehicle catalog
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, total, page]
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Vehicle' }
+                  total: { type: integer }
+                  page: { type: integer }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiError' }
+  /api/fleet-overview:
+    get:
+      operationId: getFleetOverview
+      tags: [fleet]
+      summary: Get fleet overview metrics
+      x-mock: true
+      x-proposed: true
+      responses:
+        '200':
+          description: Fleet overview
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: { $ref: '#/components/schemas/FleetOverview' }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiError' }
+  /api/routes:
+    get:
+      operationId: listRoutes
+      tags: [route]
+      summary: List approved routes
+      x-mock: true
+      x-proposed: true
+      responses:
+        '200':
+          description: Route catalog
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, total, page]
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Route' }
+                  total: { type: integer }
+                  page: { type: integer }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiError' }
+  /api/trips:
+    post:
+      operationId: createTrip
+      tags: [trip]
+      summary: Create a trip context
+      x-mock: true
+      x-proposed: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateTripRequest' }
+      responses:
+        '201':
+          description: Trip created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: { $ref: '#/components/schemas/Trip' }
+        '400':
+          description: Invalid trip details
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiError' }
+  /api/trips/{tripId}/telemetry-context:
+    get:
+      operationId: getTelemetryContext
+      tags: [telemetry]
+      summary: Get host context for the Pravah embed
+      x-mock: true
+      x-proposed: true
+      parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Telemetry embed context
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: { $ref: '#/components/schemas/TelemetryContext' }
+        '404':
+          description: Trip not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiError' }
+  /api/trips/{tripId}/score:
+    get:
+      operationId: getDriverScore
+      tags: [score]
+      summary: Retrieve the driver score for a trip
+      x-mock: true
+      x-proposed: true
+      parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Driver score result
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: { $ref: '#/components/schemas/DriverScoreResult' }
+        '404':
+          description: Score not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiError' }
+  /api/driver-scores:
+    get:
+      operationId: listDriverScores
+      tags: [score]
+      summary: List driver score history
+      x-mock: true
+      x-proposed: true
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema: { type: string }
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [mostRecent, highestScore, lowestScore, driverName]
+      responses:
+        '200':
+          description: Driver score history
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, total, page]
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/DriverScoreResult' }
+                  total: { type: integer }
+                  page: { type: integer }
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiError' }
+  /api/certificates:
+    post:
+      operationId: generateCertificate
+      tags: [certificate]
+      summary: Generate a certificate for a score result
+      x-mock: true
+      x-proposed: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [resultId]
+              properties:
+                resultId: { type: string }
+      responses:
+        '200':
+          description: Certificate download information
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: { $ref: '#/components/schemas/Certificate' }
+        '404':
+          description: Score result not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiError' }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    ApiError:
+      x-proposed: true
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string }
+        message: { type: string }
+    LoginRequest:
+      x-proposed: true
+      type: object
+      required: [username, password]
+      properties:
+        username: { type: string }
+        password: { type: string, format: password }
+    Session:
+      x-proposed: true
+      type: object
+      required: [userId, username, displayName]
+      properties:
+        userId: { type: string }
+        username: { type: string }
+        displayName: { type: string }
+    Vehicle:
+      x-proposed: true
+      type: object
+      required: [id, modelName, category, payloadOrGvwBand, fuel]
+      properties:
+        id: { type: string }
+        modelName: { type: string }
+        category: { type: string }
+        payloadOrGvwBand: { type: string }
+        fuel: { type: string }
+        imageUrl: { type: string, format: uri }
+    FleetOverview:
+      x-proposed: true
+      type: object
+      required: [vehiclesConnected, fuelEfficiencyGain, co2Reduction]
+      properties:
+        vehiclesConnected: { type: integer }
+        fuelEfficiencyGain: { type: string }
+        co2Reduction: { type: string }
+    Route:
+      x-proposed: true
+      type: object
+      required: [id, label]
+      properties:
+        id: { type: string }
+        label: { type: string }
+    CreateTripRequest:
+      x-proposed: true
+      type: object
+      required: [driverName, companyName, vehicleId, routeId]
+      properties:
+        driverName: { type: string }
+        companyName: { type: string }
+        vehicleId: { type: string }
+        routeId: { type: string }
+    Trip:
+      x-proposed: true
+      type: object
+      required: [id, driverName, companyName, vehicle, route]
+      properties:
+        id: { type: string }
+        driverName: { type: string }
+        companyName: { type: string }
+        vehicle: { $ref: '#/components/schemas/Vehicle' }
+        route: { $ref: '#/components/schemas/Route' }
+    TelemetryContext:
+      x-proposed: true
+      type: object
+      required: [tripId, driverName, companyName, vehicle, route, status]
+      properties:
+        tripId: { type: string }
+        driverName: { type: string }
+        companyName: { type: string }
+        vehicle: { $ref: '#/components/schemas/Vehicle' }
+        route: { $ref: '#/components/schemas/Route' }
+        status:
+          type: string
+          enum: [loading, ready, error]
+    DriverScoreResult:
+      x-proposed: true
+      type: object
+      required: [id, driverName, companyName, vehicle, route, score, evaluationDate, events, drivingStyle]
+      properties:
+        id: { type: string }
+        driverName: { type: string }
+        companyName: { type: string }
+        vehicle: { $ref: '#/components/schemas/Vehicle' }
+        route: { $ref: '#/components/schemas/Route' }
+        score: { type: integer, minimum: 0, maximum: 100 }
+        evaluationDate: { type: string, format: date }
+        events:
+          type: array
+          items: { $ref: '#/components/schemas/DriverEvent' }
+        drivingStyle:
+          type: array
+          items: { $ref: '#/components/schemas/DrivingStyleMetric' }
+    DriverEvent:
+      x-proposed: true
+      type: object
+      required: [name, count]
+      properties:
+        name: { type: string }
+        count: { type: integer, minimum: 0 }
+    DrivingStyleMetric:
+      x-proposed: true
+      type: object
+      required: [name, value]
+      properties:
+        name: { type: string }
+        value: { type: number, minimum: 0, maximum: 100 }
+    Certificate:
+      x-proposed: true
+      type: object
+      required: [reference, resultId, downloadUrl, official]
+      properties:
+        reference: { type: string }
+        resultId: { type: string }
+        downloadUrl: { type: string, format: uri }
+        official: { type: boolean }
