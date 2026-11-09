@@ -1,18 +1,18 @@
 ---
 description: Produce ONE valid OpenAPI 3 spec by merging the backend's partial spec (or none) with PROPOSED operations for data needs the backend hasn't built yet. Every operation is flagged x-mock true/false. Writes a backend-gaps report for the backend team.
 mode: all
-model: GPT-5.6 Luna
+model: 'GPT-5.6 Luna'
 permission:
   edit:
-    "*": deny
-    "plan/generated/api-spec.yaml": allow
-    "plan/generated/backend-gaps.md": allow
-    "plan/generated/api-changes.md": allow
+    '*': deny
+    'plan/generated/api-spec.yaml': allow
+    'plan/generated/backend-gaps.md': allow
+    'plan/generated/api-changes.md': allow
   bash:
-    "*": deny
-    "npx @redocly/cli lint*": allow
-    "node tools/run.mjs npx @redocly/cli lint*": allow
-    "node tools/run.mjs redocly lint*": allow
+    '*': deny
+    'npx @redocly/cli lint*': allow
+    'node tools/run.mjs npx @redocly/cli lint*': allow
+    'node tools/run.mjs redocly lint*': allow
 ---
 
 # Hybrid API Config
@@ -26,11 +26,13 @@ baseline spec at `plan/generated/api-spec.yaml` so later backend versions can be
 No backend spec at all → all-mock mode.
 
 ## Inputs
+
 - Backend spec path from the orchestrator (e.g. `inputs/api/backend-api.yaml`) — may be absent
 - `analysis/dataflow.md` and `analysis/components.md` — the data needs and user actions
 - Do NOT read the UX HTML (`inputs/ux/*.html`); wireframe-analyzer already did
 
 ## Outputs
+
 1. `plan/generated/api-spec.yaml` — valid OpenAPI 3.0/3.1 (NOT a custom JSON format — schema-parser and MSW depend on real OpenAPI)
 2. `plan/generated/backend-gaps.md` — what the backend team must build or change
 
@@ -66,8 +68,8 @@ paths:
       tags: [product]
       x-mock: false
       x-backend-gaps:
-        - "query param `search` — needed by SearchBar"
-        - "query param `category` — needed by CategorySelect"
+        - 'query param `search` — needed by SearchBar'
+        - 'query param `category` — needed by CategorySelect'
       # ...backend content unchanged...
   /api/products/{id}/reviews:
     get:
@@ -99,13 +101,21 @@ paths:
 
 ```markdown
 # Backend gaps — generated <date>
+
 ## Proposed endpoints (mocked until built)
+
 | Method | Path | operationId | Needed by | Schema |
+
 ## Missing params on real endpoints
+
 | Endpoint | Param | Needed by |
+
 ## Missing fields on real schemas
+
 | Schema | Field | Needed by |
+
 ## Open questions
+
 - ...
 ```
 
@@ -121,13 +131,14 @@ paths:
 3. Re-check `x-backend-gaps`: drop params the backend now supports.
 4. Update backend-gaps.md and append a dated section to `plan/generated/api-changes.md`:
 
-| operationId | Change | Detail | Impact for frontend |
-|---|---|---|---|
-| addToCart | mock → real | backend matches proposal | none — MSW stops intercepting in hybrid mode |
-| listProductReviews | mock → real, drift | `author` renamed `authorName` | types change → consumers need a TASK |
-| listProducts | param added | `search` now supported | SearchBar can send it — TASK |
+| operationId        | Change             | Detail                        | Impact for frontend                          |
+| ------------------ | ------------------ | ----------------------------- | -------------------------------------------- |
+| addToCart          | mock → real        | backend matches proposal      | none — MSW stops intercepting in hybrid mode |
+| listProductReviews | mock → real, drift | `author` renamed `authorName` | types change → consumers need a TASK         |
+| listProducts       | param added        | `search` now supported        | SearchBar can send it — TASK                 |
 
 ## Validation (run before returning)
+
 - `npx @redocly/cli lint --extends=minimal plan/generated/api-spec.yaml` → zero errors (structural
   validity — the default ruleset also errors on style issues like missing summaries or security,
   which must not block a real backend spec)
@@ -138,9 +149,11 @@ paths:
 - Every server-data need in dataflow.md maps to an operation or a gap row
 
 ## If `npx` is blocked (Windows PowerShell execution policy)
+
 Use `node tools/run.mjs redocly lint --extends=minimal <spec>` instead of `npx @redocly/cli lint …` — it runs the tool through node, no PowerShell script involved. Never change the execution policy and never BLOCK only because `npx` is unavailable.
 
 ## Return (last line)
+
 - `HANDOFF: status=DONE next=orchestrator task=none reason="api-spec.yaml: <N> real + <M> mock ops, <K> gaps in backend-gaps.md"`
 - `HANDOFF: status=BLOCKED next=orchestrator task=none reason="backend spec invalid: <lint error>"`
 - `HANDOFF: status=NEEDS-RESEARCH next=orchestrator task=none reason="<which data need is ambiguous>"`

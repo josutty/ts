@@ -1,117 +1,117 @@
 ---
 description: Implements ONE task from its context pack (plan/packs/<ID>.builder.md) in a fresh session. Reads only the pack, edits only the task's Files table, self-checks with tools/task.mjs. The cheap, fast builder for the senior-developer workflow.
 mode: all
-model: GPT-5.6 Luna
+model: 'GPT-5.6 Luna'
 permission:
   edit:
-    "*": deny
-    "src/**": allow
-    "plan/history/**": allow
-    "src/**/*.test.ts": deny
-    "src/**/*.test.tsx": deny
-    "src/**/*.spec.ts": deny
-    "src/**/*.spec.tsx": deny
-    "src/**/__tests__/**": deny
-    "src/**/api/**": deny
-    "src/**/model/**": deny
-    "src/app/store/**": deny
-    "src/shared/api/**": deny
-    "src/shared/config/**": deny
-    "src/shared/ui/theme/**": deny
-    "src/shared/lib/store/**": deny
-    "src/shared/lib/logger/**": deny
-    "src/shared/config/routes.ts": allow
+    '*': deny
+    'src/**': allow
+    'plan/history/**': allow
+    'src/**/*.test.ts': deny
+    'src/**/*.test.tsx': deny
+    'src/**/*.spec.ts': deny
+    'src/**/*.spec.tsx': deny
+    'src/**/__tests__/**': deny
+    'src/**/api/**': deny
+    'src/**/model/**': deny
+    'src/app/store/**': deny
+    'src/shared/api/**': deny
+    'src/shared/config/**': deny
+    'src/shared/ui/theme/**': deny
+    'src/shared/lib/store/**': deny
+    'src/shared/lib/logger/**': deny
+    'src/shared/config/routes.ts': allow
   bash:
-    "*": deny
-    "cd": allow
-    "cd *": allow
-    "Set-Location *": allow
-    "Push-Location *": allow
-    "Pop-Location": allow
-    "Get-Location*": allow
-    "Resolve-Path *": allow
-    "Test-Path *": allow
-    "Get-Item *": allow
-    "Get-Date*": allow
-    "$env:*": allow
-    "Get-Content *": allow
-    "Get-ChildItem*": allow
-    "Select-String *": allow
-    "Select-Object *": allow
-    "Where-Object *": allow
-    "Sort-Object*": allow
-    "Measure-Object*": allow
-    "Out-String*": allow
-    "Format-Table*": allow
-    "Format-List*": allow
-    "type *": allow
-    "dir": allow
-    "dir *": allow
-    "findstr *": allow
-    "echo *": allow
-    "Write-Host *": allow
-    "Write-Output *": allow
-    "node -v": allow
-    "node --version": allow
-    "npm -v": allow
-    "npm --version": allow
-    "mkdir *": allow
-    "md *": allow
-    "New-Item -ItemType Directory *": allow
-    "New-Item -Type Directory *": allow
-    "ls*": allow
-    "cat *": allow
-    "head *": allow
-    "tail *": allow
-    "grep *": allow
-    "wc *": allow
-    "find *": allow
-    "date*": allow
-    "pwd": allow
-    "npm run typecheck*": allow
-    "node tools/run.mjs npm run typecheck*": allow
-    "npm run lint*": allow
-    "node tools/run.mjs npm run lint*": allow
-    "npm test*": allow
-    "node tools/run.mjs npm test*": allow
-    "npm run test*": allow
-    "node tools/run.mjs npm run test*": allow
-    "npx vitest*": allow
-    "node tools/run.mjs npx vitest*": allow
-    "npx eslint *": allow
-    "node tools/run.mjs npx eslint *": allow
-    "npx steiger*": allow
-    "node tools/run.mjs npx steiger*": allow
-    "npx tsc --noEmit*": allow
-    "node tools/run.mjs npx tsc --noEmit*": allow
-    "npx prettier --write *": allow
-    "node tools/run.mjs npx prettier --write *": allow
-    "npx prettier --check *": allow
-    "node tools/run.mjs npx prettier --check *": allow
-    "node tools/task.mjs*": allow
-    "node tools/design-spec.mjs*": allow
-    "node tools/run.mjs tsc --noEmit*": allow
-    "git diff*": allow
-    "git status*": allow
-    "git log*": allow
-    "git merge-base*": allow
-    "git show*": allow
-    "git rev-parse*": allow
-    "git ls-files*": allow
-    "git branch --show-current*": allow
-    "git restore --source=*": allow
-    "git add -A*": deny
-    "git add .": deny
-    "git add --all*": deny
-    "git commit -a*": deny
-    "git commit --amend*": deny
-    "*--no-verify*": deny
-    "git push*": deny
-    "git config*": deny
-    "find *-delete*": deny
-    "find *-exec*": deny
-    "npx -y*": deny
-    "npx --yes*": deny
+    '*': deny
+    'cd': allow
+    'cd *': allow
+    'Set-Location *': allow
+    'Push-Location *': allow
+    'Pop-Location': allow
+    'Get-Location*': allow
+    'Resolve-Path *': allow
+    'Test-Path *': allow
+    'Get-Item *': allow
+    'Get-Date*': allow
+    '$env:*': allow
+    'Get-Content *': allow
+    'Get-ChildItem*': allow
+    'Select-String *': allow
+    'Select-Object *': allow
+    'Where-Object *': allow
+    'Sort-Object*': allow
+    'Measure-Object*': allow
+    'Out-String*': allow
+    'Format-Table*': allow
+    'Format-List*': allow
+    'type *': allow
+    'dir': allow
+    'dir *': allow
+    'findstr *': allow
+    'echo *': allow
+    'Write-Host *': allow
+    'Write-Output *': allow
+    'node -v': allow
+    'node --version': allow
+    'npm -v': allow
+    'npm --version': allow
+    'mkdir *': allow
+    'md *': allow
+    'New-Item -ItemType Directory *': allow
+    'New-Item -Type Directory *': allow
+    'ls*': allow
+    'cat *': allow
+    'head *': allow
+    'tail *': allow
+    'grep *': allow
+    'wc *': allow
+    'find *': allow
+    'date*': allow
+    'pwd': allow
+    'npm run typecheck*': allow
+    'node tools/run.mjs npm run typecheck*': allow
+    'npm run lint*': allow
+    'node tools/run.mjs npm run lint*': allow
+    'npm test*': allow
+    'node tools/run.mjs npm test*': allow
+    'npm run test*': allow
+    'node tools/run.mjs npm run test*': allow
+    'npx vitest*': allow
+    'node tools/run.mjs npx vitest*': allow
+    'npx eslint *': allow
+    'node tools/run.mjs npx eslint *': allow
+    'npx steiger*': allow
+    'node tools/run.mjs npx steiger*': allow
+    'npx tsc --noEmit*': allow
+    'node tools/run.mjs npx tsc --noEmit*': allow
+    'npx prettier --write *': allow
+    'node tools/run.mjs npx prettier --write *': allow
+    'npx prettier --check *': allow
+    'node tools/run.mjs npx prettier --check *': allow
+    'node tools/task.mjs*': allow
+    'node tools/design-spec.mjs*': allow
+    'node tools/run.mjs tsc --noEmit*': allow
+    'git diff*': allow
+    'git status*': allow
+    'git log*': allow
+    'git merge-base*': allow
+    'git show*': allow
+    'git rev-parse*': allow
+    'git ls-files*': allow
+    'git branch --show-current*': allow
+    'git restore --source=*': allow
+    'git add -A*': deny
+    'git add .': deny
+    'git add --all*': deny
+    'git commit -a*': deny
+    'git commit --amend*': deny
+    '*--no-verify*': deny
+    'git push*': deny
+    'git config*': deny
+    'find *-delete*': deny
+    'find *-exec*': deny
+    'npx -y*': deny
+    'npx --yes*': deny
 ---
 
 > **OpenCode:** pick **pack-builder** with Tab, or use the plain **Build** agent — the project plugin

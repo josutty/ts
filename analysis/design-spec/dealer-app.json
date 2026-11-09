@@ -1,0 +1,241 @@
+{
+  "table": null,
+  "controls": [
+    {
+      "name": "Sign In →",
+      "pressed": null,
+      "popup": null,
+      "contrast": 4.4,
+      "cy": 555,
+      "inGroup": null,
+      "height": 46,
+      "fontFamily": "Arial",
+      "fontSize": 15,
+      "fontWeight": 700,
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(230, 47, 50)",
+      "textAlign": "center",
+      "textTransform": "none",
+      "letterSpacing": 0,
+      "whiteSpace": "normal",
+      "paddingX": 18,
+      "paddingY": 12,
+      "borderRight": "none",
+      "borderRadius": 9,
+      "position": "static",
+      "deco": "none",
+      "bgImage": null,
+      "row": null
+    }
+  ],
+  "decor": [],
+  "palette": {
+    "rgb(23, 42, 74)": 53,
+    "rgb(230, 47, 50)": 5,
+    "rgb(0, 24, 104)": 10,
+    "rgb(98, 113, 140)": 6,
+    "rgb(129, 91, 19)": 1,
+    "rgb(255, 249, 237)": 1,
+    "rgb(243, 216, 165)": 1,
+    "rgb(255, 255, 255)": 6,
+    "rgb(227, 233, 242)": 1,
+    "rgb(203, 213, 225)": 2,
+    "rgb(238, 243, 252)": 1
+  },
+  "page": {
+    "background": "rgb(246, 248, 252)",
+    "gradient": null
+  },
+  "card": {
+    "background": "rgb(255, 255, 255)",
+    "radius": 20,
+    "width": 460,
+    "centered": false
+  },
+  "blocks": [
+    {
+      "label": "Sign in",
+      "depth": 0,
+      "row": 1,
+      "x": 809,
+      "y": 140,
+      "w": 460,
+      "h": 540,
+      "rootWidth": 1440,
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(227, 233, 242)",
+      "radius": 20,
+      "shadow": true,
+      "padding": 42,
+      "gapAbove": null
+    },
+    {
+      "label": "Prototype access only. No real account verification or live ",
+      "depth": 0,
+      "row": 2,
+      "x": 132,
+      "y": 636,
+      "w": 539,
+      "h": 45,
+      "rootWidth": 1440,
+      "background": "rgb(255, 249, 237)",
+      "border": "rgb(243, 216, 165)",
+      "radius": 10,
+      "shadow": false,
+      "padding": 14,
+      "gapAbove": -44
+    }
+  ],
+  "texts": [
+    {
+      "text": "Eicher Digital Operations",
+      "deco": "none",
+      "contrast": 4.1,
+      "inCard": false,
+      "align": "left",
+      "cy": 147,
+      "row": null,
+      "fontSize": 12,
+      "fontWeight": 700,
+      "color": "rgb(230, 47, 50)"
+    },
+    {
+      "text": "Smarter journeys. Clearer insights.",
+      "deco": "none",
+      "contrast": 15,
+      "inCard": false,
+      "align": "left",
+      "cy": 230,
+      "row": null,
+      "fontSize": 44,
+      "fontWeight": 700,
+      "color": "rgb(0, 24, 104)"
+    },
+    {
+      "text": "An intuitive way to explore Eicher vehicles, monitor a trip and understand drive",
+      "deco": "none",
+      "contrast": 4.7,
+      "inCard": false,
+      "align": "left",
+      "cy": 327,
+      "row": null,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "color": "rgb(98, 113, 140)"
+    },
+    {
+      "text": "Prototype access only. No real account verification or live vehicle data is conn",
+      "deco": "none",
+      "contrast": 5.8,
+      "inCard": false,
+      "align": "left",
+      "cy": 658,
+      "row": null,
+      "fontSize": 13,
+      "fontWeight": 400,
+      "color": "rgb(129, 91, 19)"
+    },
+    {
+      "text": "Welcome back",
+      "deco": "none",
+      "contrast": 4.4,
+      "inCard": true,
+      "align": "left",
+      "cy": 191,
+      "row": null,
+      "fontSize": 12,
+      "fontWeight": 700,
+      "color": "rgb(230, 47, 50)"
+    },
+    {
+      "text": "Sign in",
+      "deco": "none",
+      "contrast": 15.8,
+      "inCard": true,
+      "align": "left",
+      "cy": 237,
+      "row": null,
+      "fontSize": 38,
+      "fontWeight": 700,
+      "color": "rgb(0, 24, 104)"
+    },
+    {
+      "text": "Use demo credentials to explore the experience. Real authentication is not enabl",
+      "deco": "none",
+      "contrast": 4.9,
+      "inCard": true,
+      "align": "left",
+      "cy": 297,
+      "row": null,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "color": "rgb(98, 113, 140)"
+    },
+    {
+      "text": "Username",
+      "deco": "none",
+      "contrast": 15.8,
+      "inCard": true,
+      "align": "left",
+      "cy": 354,
+      "row": null,
+      "fontSize": 13,
+      "fontWeight": 700,
+      "color": "rgb(0, 24, 104)"
+    },
+    {
+      "text": "Password",
+      "deco": "none",
+      "contrast": 15.8,
+      "inCard": true,
+      "align": "left",
+      "cy": 448,
+      "row": null,
+      "fontSize": 13,
+      "fontWeight": 700,
+      "color": "rgb(0, 24, 104)"
+    },
+    {
+      "text": "Demo credentials: admin / admin123. This is not a secure production login.",
+      "deco": "none",
+      "contrast": 4.9,
+      "inCard": true,
+      "align": "center",
+      "cy": 607,
+      "row": null,
+      "fontSize": 12,
+      "fontWeight": 400,
+      "color": "rgb(98, 113, 140)"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "Username",
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(203, 213, 225)",
+      "radius": 9,
+      "height": 50,
+      "fontSize": 15
+    },
+    {
+      "name": "Password",
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(203, 213, 225)",
+      "radius": 9,
+      "height": 50,
+      "fontSize": 15
+    }
+  ],
+  "gradients": [
+    {
+      "where": "section.login-hero",
+      "type": "linear",
+      "stops": [
+        "rgb(238, 243, 252)",
+        "rgb(255, 255, 255)"
+      ],
+      "angle": 145,
+      "raw": "linear-gradient(145deg, rgb(238, 243, 252), rgb(255, 255, 255))"
+    }
+  ]
+}

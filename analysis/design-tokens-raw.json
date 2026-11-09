@@ -1,0 +1,21 @@
+{
+  "light": {
+    "--blue": "#001868",
+    "--red": "#e62f32",
+    "--ink": "#172a4a",
+    "--muted": "#62718c",
+    "--bg": "#f6f8fc",
+    "--line": "#e3e9f2",
+    "--white": "#fff",
+    "--green": "#15803d",
+    "--amber": "#c17800",
+    "--shadow": "0 8px 28px rgba(14,39,88,.055)"
+  },
+  "dark": {},
+  "faces": [],
+  "links": [],
+  "used": {
+    "Arial": 35
+  },
+  "fontList": []
+}

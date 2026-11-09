@@ -1,0 +1,30 @@
+{
+  "table": null,
+  "controls": [],
+  "decor": [],
+  "palette": {
+    "rgb(0, 24, 104)": 2
+  },
+  "page": {
+    "background": "rgb(255, 255, 255)",
+    "gradient": null
+  },
+  "card": null,
+  "blocks": [],
+  "texts": [
+    {
+      "text": "PROTOTYPE",
+      "deco": "none",
+      "contrast": 14.7,
+      "inCard": false,
+      "align": "left",
+      "cy": 17,
+      "row": null,
+      "fontSize": 12,
+      "fontWeight": 900,
+      "color": "rgb(0, 24, 104)"
+    }
+  ],
+  "inputs": [],
+  "gradients": []
+}

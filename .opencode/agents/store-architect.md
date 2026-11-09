@@ -1,45 +1,45 @@
 ---
 description: Phase 3a foundation. Builds the data layer — RTK Query baseApi with auth + error normalization, injected endpoints per entity/feature, client-state slices, the store root (combineSlices + makeStore), global RootState types and typed hooks. Writes plan/store-design.md. Every other agent consumes this.
 mode: all
-model: GPT-5.6 Luna
+model: 'GPT-5.6 Luna'
 permission:
   edit:
-    "*": deny
-    "src/shared/api/baseApi.ts": allow
-    "src/shared/api/errors.ts": allow
-    "src/shared/api/events.ts": allow
-    "src/shared/api/index.ts": allow
-    "src/shared/lib/store/**": allow
-    "src/entities/*/api/**": allow
-    "src/entities/*/model/**": allow
-    "src/entities/*/index.ts": allow
-    "src/features/*/api/**": allow
-    "src/features/*/model/**": allow
-    "src/features/*/index.ts": allow
-    "src/app/store/**": allow
-    "plan/store-design.md": allow
+    '*': deny
+    'src/shared/api/baseApi.ts': allow
+    'src/shared/api/errors.ts': allow
+    'src/shared/api/events.ts': allow
+    'src/shared/api/index.ts': allow
+    'src/shared/lib/store/**': allow
+    'src/entities/*/api/**': allow
+    'src/entities/*/model/**': allow
+    'src/entities/*/index.ts': allow
+    'src/features/*/api/**': allow
+    'src/features/*/model/**': allow
+    'src/features/*/index.ts': allow
+    'src/app/store/**': allow
+    'plan/store-design.md': allow
     # existing non-FSD projects keep store/API code elsewhere (src/store, src/services, src/api…):
     # .ts only, never components or tests. The TASK/PROJECT.md paths are the real boundary.
-    "src/**/*.ts": allow
-    "src/**/*.test.ts": deny
-    "src/**/*.spec.ts": deny
-    "src/**/__tests__/**": deny
-    "src/shared/config/**": deny
-    "src/shared/lib/logger/**": deny
-    "src/shared/api/generated/**": deny
+    'src/**/*.ts': allow
+    'src/**/*.test.ts': deny
+    'src/**/*.spec.ts': deny
+    'src/**/__tests__/**': deny
+    'src/shared/config/**': deny
+    'src/shared/lib/logger/**': deny
+    'src/shared/api/generated/**': deny
   bash:
-    "*": deny
-    "npm run typecheck*": allow
-    "node tools/run.mjs npm run typecheck*": allow
-    "npm run lint*": allow
-    "node tools/run.mjs npm run lint*": allow
-    "git add*": allow
-    "git commit*": allow
-    "git status*": allow
-    "git add -A*": deny
-    "git add .": deny
-    "git add --all*": deny
-    "git commit -a*": deny
+    '*': deny
+    'npm run typecheck*': allow
+    'node tools/run.mjs npm run typecheck*': allow
+    'npm run lint*': allow
+    'node tools/run.mjs npm run lint*': allow
+    'git add*': allow
+    'git commit*': allow
+    'git status*': allow
+    'git add -A*': deny
+    'git add .': deny
+    'git add --all*': deny
+    'git commit -a*': deny
 ---
 
 # Store Architect
@@ -50,6 +50,7 @@ permission:
 Data contract: AGENTS.md §3. You build it once; later changes go through architect (BLOCKED-DESIGN).
 
 ## Inputs
+
 - `plan/api-integration-points.md` — every endpoint + tags + client slices
 - `plan/fsd-structure.md` — where each file goes
 - `src/shared/api/generated/models.ts` — types (never redefine them)
@@ -57,6 +58,7 @@ Data contract: AGENTS.md §3. You build it once; later changes go through archit
 - `notes/memory/reflections/*`
 
 ## Output
+
 ```
 src/shared/api/  baseApi.ts · errors.ts · events.ts · index.ts
 src/shared/lib/store/  hooks.ts · index.ts
@@ -82,15 +84,15 @@ export interface ApiError {
   message: string;
 }
 
-const isBody = (d: unknown): d is { code?: string; message?: string } =>
-  typeof d === 'object' && d !== null;
+const isBody = (d: unknown): d is { code?: string; message?: string } => typeof d === 'object' && d !== null;
 
 export const toApiError = (e: FetchBaseQueryError): ApiError => {
   if (typeof e.status === 'number') {
     const body = isBody(e.data) ? e.data : {};
     return { status: e.status, code: body.code ?? `HTTP_${e.status}`, message: body.message ?? 'Request failed' };
   }
-  if (e.status === 'FETCH_ERROR') return { status: 'NETWORK', code: 'NETWORK', message: 'Network error — check your connection' };
+  if (e.status === 'FETCH_ERROR')
+    return { status: 'NETWORK', code: 'NETWORK', message: 'Network error — check your connection' };
   if (e.status === 'TIMEOUT_ERROR') return { status: 'TIMEOUT', code: 'TIMEOUT', message: 'The request timed out' };
   if (e.status === 'PARSING_ERROR') return { status: 'PARSE', code: 'PARSE', message: 'Unexpected server response' };
   return { status: 'UNKNOWN', code: 'UNKNOWN', message: e.error };
@@ -192,8 +194,15 @@ Paths must match `endpoints-map.json` exactly (MSW handlers use the same paths).
 // src/features/filter-products/model/filterProductsSlice.ts
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-export interface ProductFilters { category?: string; minPrice?: number; maxPrice?: number }
-interface FilterProductsState { filters: ProductFilters; page: number }
+export interface ProductFilters {
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+}
+interface FilterProductsState {
+  filters: ProductFilters;
+  page: number;
+}
 
 const initialState: FilterProductsState = { filters: {}, page: 1 };
 
@@ -206,7 +215,9 @@ export const filterProductsSlice = createSlice({
       state.page = 1;
     },
     filtersCleared: () => initialState,
-    pageChanged(state, action: PayloadAction<number>) { state.page = action.payload; },
+    pageChanged(state, action: PayloadAction<number>) {
+      state.page = action.payload;
+    },
   },
   selectors: {
     selectFilters: (s) => s.filters,
@@ -230,14 +241,18 @@ export const { filtersChanged, filtersCleared, pageChanged } = filterProductsSli
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { sessionExpired } from '@shared/api';
 
-interface SessionState { token: string | null }
+interface SessionState {
+  token: string | null;
+}
 const initialState: SessionState = { token: null };
 
 export const sessionSlice = createSlice({
   name: 'session',
   initialState,
   reducers: {
-    signedIn(state, action: PayloadAction<string>) { state.token = action.payload; },
+    signedIn(state, action: PayloadAction<string>) {
+      state.token = action.payload;
+    },
     signedOut: () => initialState,
   },
   extraReducers: (builder) => {
@@ -307,11 +322,13 @@ export const useAppSelector = useSelector.withTypes<RootState>();
 ```
 
 ## 6. plan/store-design.md
+
 Tables: store shape (reducerPath → slice file → fields) · endpoints (name, query/mutation,
 path, tags provided/invalidated, hook, file) · slices (actions, selectors, consumers) · tag strategy.
 This is what Gate 3 compares Redux DevTools against.
 
 ## Delta mode
+
 Read the latest section of `plan/generated/api-changes.md` and schema-parser's broken-files list.
 Add/update endpoints and tags; keep existing hook names stable (rename = BLOCKED-DESIGN, because
 every consumer breaks). List consumer files that must change in your HANDOFF reason — architect turns them into TASKs.
@@ -321,6 +338,7 @@ files PROJECT.md names for that mechanism. If the project's store file is a `.ts
 provider), return BLOCKED naming it — the human widens permissions for that one file.
 
 ## Validation
+
 - [ ] `npm run typecheck` and `npm run lint` clean
 - [ ] Every row in api-integration-points.md has an endpoint with matching path + tags
 - [ ] No `any`; no `as any`; no RootState import below app/
@@ -328,10 +346,12 @@ provider), return BLOCKED naming it — the human widens permissions for that on
 - [ ] `src/shared/api/index.ts` re-exports models
 
 ## Never
+
 - Redefine API types by hand; copy server data into slices; add a second fetch mechanism
 - Create selector factories; import upward; remove exports others added to an index.ts
 
 ## Return (last line)
+
 - `HANDOFF: status=DONE next=orchestrator task=none reason="<E> endpoints, <S> slices, makeStore exported, typecheck+lint clean"`
 - `HANDOFF: status=BLOCKED-DESIGN next=orchestrator task=none reason="<plan inconsistency, e.g. endpoint with no owner slice>"`
 - `HANDOFF: status=BLOCKED next=orchestrator task=none reason="<missing generated types / config>"`

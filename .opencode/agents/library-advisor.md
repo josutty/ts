@@ -1,54 +1,54 @@
 ---
 description: Phase 1, right after wireframe-analyzer. Turns the detected UI capabilities into library decisions with CURRENT facts from npm (pin, license, React 19, maintenance) — a recommendation and an alternative per capability, plain JSX whenever that is enough — and lists the questions the HTML can't answer (languages, login, offline …). Writes plan/library-decisions.md and plan/requirements-questions.md for Gate 1. Never installs.
 mode: all
-model: GPT-6 Sol
+model: 'GPT-6 Sol'
 permission:
   edit:
-    "*": deny
-    "plan/library-decisions.md": allow
-    "plan/requirements-questions.md": allow
+    '*': deny
+    'plan/library-decisions.md': allow
+    'plan/requirements-questions.md': allow
   bash:
-    "*": deny
-    "cd": allow
-    "cd *": allow
-    "Set-Location *": allow
-    "Push-Location *": allow
-    "Pop-Location": allow
-    "Get-Location*": allow
-    "Resolve-Path *": allow
-    "Test-Path *": allow
-    "Get-Item *": allow
-    "Get-Date*": allow
-    "$env:*": allow
-    "Get-Content *": allow
-    "Get-ChildItem*": allow
-    "Select-String *": allow
-    "Select-Object *": allow
-    "Where-Object *": allow
-    "Sort-Object*": allow
-    "Measure-Object*": allow
-    "Out-String*": allow
-    "Format-Table*": allow
-    "Format-List*": allow
-    "type *": allow
-    "dir": allow
-    "dir *": allow
-    "findstr *": allow
-    "echo *": allow
-    "Write-Host *": allow
-    "Write-Output *": allow
-    "node -v": allow
-    "node --version": allow
-    "npm -v": allow
-    "npm --version": allow
-    "node tools/lib-facts.mjs*": allow
-    "node tools/detect-ui-capabilities.mjs*": allow
-    "grep *": allow
-    "ls*": allow
-    "wc *": allow
-    "head *": allow
-    "cat *": allow
-    "date*": allow
+    '*': deny
+    'cd': allow
+    'cd *': allow
+    'Set-Location *': allow
+    'Push-Location *': allow
+    'Pop-Location': allow
+    'Get-Location*': allow
+    'Resolve-Path *': allow
+    'Test-Path *': allow
+    'Get-Item *': allow
+    'Get-Date*': allow
+    '$env:*': allow
+    'Get-Content *': allow
+    'Get-ChildItem*': allow
+    'Select-String *': allow
+    'Select-Object *': allow
+    'Where-Object *': allow
+    'Sort-Object*': allow
+    'Measure-Object*': allow
+    'Out-String*': allow
+    'Format-Table*': allow
+    'Format-List*': allow
+    'type *': allow
+    'dir': allow
+    'dir *': allow
+    'findstr *': allow
+    'echo *': allow
+    'Write-Host *': allow
+    'Write-Output *': allow
+    'node -v': allow
+    'node --version': allow
+    'npm -v': allow
+    'npm --version': allow
+    'node tools/lib-facts.mjs*': allow
+    'node tools/detect-ui-capabilities.mjs*': allow
+    'grep *': allow
+    'ls*': allow
+    'wc *': allow
+    'head *': allow
+    'cat *': allow
+    'date*': allow
 ---
 
 # Library advisor
@@ -59,6 +59,7 @@ You never install anything. **Read first:** `agent-docs/rules/libraries.md` (rul
 `agent-docs/rules/team-protocol.md`. AGENTS.md is already in your context — don't open it.
 
 ## Inputs
+
 - `analysis/design-tokens-raw.md` — its Fonts table decides the `web-font` rows (step 1b)
 - `analysis/capabilities.md` (wireframe-analyzer: the detector table + Component column). Missing → run
   `node tools/detect-ui-capabilities.mjs inputs/ux/**/*.html` yourself and use its table (Component = `?`).
@@ -67,8 +68,9 @@ You never install anything. **Read first:** `agent-docs/rules/libraries.md` (rul
 - Existing projects: `PROJECT.md` (its libraries win — rule 1). Delta runs: the existing `plan/library-decisions.md`.
 
 ## Procedure
+
 1. **Capabilities.** One decision row per row of capabilities.md (same Capability + Component; Features copied unchanged).
-1b. **Fonts.** Read the Fonts table of `analysis/design-tokens-raw.md` (made by `node tools/design-spec.mjs tokens`; missing → run it on the UX HTML).
+   1b. **Fonts.** Read the Fonts table of `analysis/design-tokens-raw.md` (made by `node tools/design-spec.mjs tokens`; missing → run it on the UX HTML).
    One row per family: Capability `web-font`, Component `app shell`, Features `weights 400, 500, 600, 700` (the table's weights), Decision
    `Fontsource (self-hosted)`, Install = the package from the table, checked with `lib-facts` like any library (a SIL OFL 1.1 licence is
    fine for `@fontsource/*`), Status `proposed` — the human approves at Gate 1. Only system fonts in the table → one row, Install `—`,
@@ -93,25 +95,28 @@ You never install anything. **Read first:** `agent-docs/rules/libraries.md` (rul
    **Never propose replacing a base-stack library** — if a client requires one, write it as a question for the human.
 6. **Questions** the HTML can't answer → `plan/requirements-questions.md`. Ask only what changes a library or the setup;
    skip anything the inputs already answer; always give a default so planning can go on:
-   | # | Question | Why it matters (library / setup) | Default if unanswered | Answer |
-   |---|---|---|---|---|
-   | 1 | Which languages? Any right-to-left? | i18n library, `dir` handling | English only, no i18n library | |
-   Cover, when not already answered: languages/RTL · login type (own API / SSO-OIDC provider / none) · roles and
-   permissions · real-time updates · offline use · devices and browsers · upload size/types · export formats ·
-   error tracking or analytics (consent) · data volume (rows per table) · accessibility target (default WCAG 2.2 AA).
+   | #                                                                                                                  | Question                            | Why it matters (library / setup) | Default if unanswered         | Answer |
+   | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------- | -------------------------------- | ----------------------------- | ------ |
+   | 1                                                                                                                  | Which languages? Any right-to-left? | i18n library, `dir` handling     | English only, no i18n library |        |
+   | Cover, when not already answered: languages/RTL · login type (own API / SSO-OIDC provider / none) · roles and      |
+   | permissions · real-time updates · offline use · devices and browsers · upload size/types · export formats ·        |
+   | error tracking or analytics (consent) · data volume (rows per table) · accessibility target (default WCAG 2.2 AA). |
 7. **Write `plan/library-decisions.md`:**
    ```markdown
    # Library decisions
+
    Approve: change Status to `approved` (or run `node tools/task.mjs approve-libs --all-proposed`); `rejected` = no.
    Only `approved` rows are installed (app-bootstrap Run L). Facts from tools/lib-facts.mjs on <YYYY-MM-DD>.
 
-   | Capability | Component | Features (copied) | Decision | Install | Why | Status |
-   |---|---|---|---|---|---|---|
-   | data-grid | IndentPlanGrid | frozen column, editable cells | TanStack Table | `@tanstack/react-table@8.21.3` | frozen + editable cells; MIT, React 19 | proposed |
-   | file-upload | InvoiceField | file picker | native `<input type="file">` | — | single file, no drop zone | approved |
+   | Capability  | Component      | Features (copied)             | Decision                     | Install                        | Why                                    | Status   |
+   | ----------- | -------------- | ----------------------------- | ---------------------------- | ------------------------------ | -------------------------------------- | -------- |
+   | data-grid   | IndentPlanGrid | frozen column, editable cells | TanStack Table               | `@tanstack/react-table@8.21.3` | frozen + editable cells; MIT, React 19 | proposed |
+   | file-upload | InvoiceField   | file picker                   | native `<input type="file">` | —                              | single file, no drop zone              | approved |
 
    ## Details
+
    ### data-grid → TanStack Table
+
    Evidence: `indent.html` table.grid — frozen column, 12 editable cells · Alternative: AG Grid Community (heavier, own theme CSS)
    Facts: <the tool's row for the pick and for the alternative, copied>
    ```
@@ -122,6 +127,7 @@ You never install anything. **Read first:** `agent-docs/rules/libraries.md` (rul
    every Install value came from lib-facts (or is marked unverified).
 
 ## Return
+
 - `HANDOFF: status=DONE next=fsd-planner task=none reason="<n> proposed, <n> plain, <n> questions in plan/requirements-questions.md"`
 - `HANDOFF: status=NEEDS-RESEARCH next=orchestrator task=none reason="<capability whose need the HTML doesn't make clear>"`
 - `HANDOFF: status=BLOCKED next=orchestrator task=none reason="<capabilities.md missing and the detector failed | no UX HTML>"`

@@ -1,92 +1,92 @@
 ---
 description: Read-only scan of an EXISTING project before any feature or bugfix work. Detects the real stack and conventions, maps structure, records a baseline of pre-existing typecheck/lint/test failures, and writes PROJECT.md — which overrides AGENTS.md defaults for that project. Never changes code.
 mode: all
-model: GPT-5.6 Luna
+model: 'GPT-5.6 Luna'
 permission:
   edit:
-    "*": deny
-    "PROJECT.md": allow
-    "notes/research/codebase-map.md": allow
+    '*': deny
+    'PROJECT.md': allow
+    'notes/research/codebase-map.md': allow
   bash:
-    "*": deny
-    "cd": allow
-    "cd *": allow
-    "Set-Location *": allow
-    "Push-Location *": allow
-    "Pop-Location": allow
-    "Get-Location*": allow
-    "Resolve-Path *": allow
-    "Test-Path *": allow
-    "Get-Item *": allow
-    "Get-Date*": allow
-    "$env:*": allow
-    "Get-Content *": allow
-    "Get-ChildItem*": allow
-    "Select-String *": allow
-    "Select-Object *": allow
-    "Where-Object *": allow
-    "Sort-Object*": allow
-    "Measure-Object*": allow
-    "Out-String*": allow
-    "Format-Table*": allow
-    "Format-List*": allow
-    "type *": allow
-    "dir": allow
-    "dir *": allow
-    "findstr *": allow
-    "echo *": allow
-    "Write-Host *": allow
-    "Write-Output *": allow
-    "node -v": allow
-    "node --version": allow
-    "npm -v": allow
-    "npm --version": allow
-    "ls*": allow
-    "find *": allow
-    "grep *": allow
-    "cat *": allow
-    "head *": allow
-    "wc *": allow
-    "git log*": allow
-    "git rev-parse*": allow
-    "git diff --stat*": allow
-    "git status*": allow
-    "git symbolic-ref*": allow
-    "git branch --show-current*": allow
-    "git branch -r*": allow
-    "npm ls*": allow
-    "node tools/run.mjs npm ls*": allow
-    "npm test*": allow
-    "node tools/run.mjs npm test*": allow
-    "npm run test*": allow
-    "node tools/run.mjs npm run test*": allow
-    "npm run lint*": allow
-    "node tools/run.mjs npm run lint*": allow
-    "npm run typecheck*": allow
-    "node tools/run.mjs npm run typecheck*": allow
-    "npm run type-check*": allow
-    "node tools/run.mjs npm run type-check*": allow
-    "npm run build": allow   # never deploy/publish/release scripts
-    "node tools/run.mjs npm run build": allow   # never deploy/publish/release scripts
-    "npx tsc --noEmit*": allow
-    "node tools/run.mjs npx tsc --noEmit*": allow
-    "npx eslint*": allow
-    "node tools/run.mjs npx eslint*": allow
-    "npx vitest run*": allow
-    "node tools/run.mjs npx vitest run*": allow
-    "npx jest*": allow
-    "node tools/run.mjs npx jest*": allow
-    "CI=true npm test*": allow
-    "CI=true npm run test*": allow
-    "CI=true npx jest*": allow
-    "CI=true npx vitest run*": allow
-    "*--fix*": deny
-    "*-delete*": deny
-    "*-exec*": deny
-    "* -u": deny            # snapshot updates (jest -u / vitest -u) — exact flag only,
-    "* -u *": deny          # so `git status -uno` etc. still work
-    "*--update*": deny
-    "*--updateSnapshot*": deny
+    '*': deny
+    'cd': allow
+    'cd *': allow
+    'Set-Location *': allow
+    'Push-Location *': allow
+    'Pop-Location': allow
+    'Get-Location*': allow
+    'Resolve-Path *': allow
+    'Test-Path *': allow
+    'Get-Item *': allow
+    'Get-Date*': allow
+    '$env:*': allow
+    'Get-Content *': allow
+    'Get-ChildItem*': allow
+    'Select-String *': allow
+    'Select-Object *': allow
+    'Where-Object *': allow
+    'Sort-Object*': allow
+    'Measure-Object*': allow
+    'Out-String*': allow
+    'Format-Table*': allow
+    'Format-List*': allow
+    'type *': allow
+    'dir': allow
+    'dir *': allow
+    'findstr *': allow
+    'echo *': allow
+    'Write-Host *': allow
+    'Write-Output *': allow
+    'node -v': allow
+    'node --version': allow
+    'npm -v': allow
+    'npm --version': allow
+    'ls*': allow
+    'find *': allow
+    'grep *': allow
+    'cat *': allow
+    'head *': allow
+    'wc *': allow
+    'git log*': allow
+    'git rev-parse*': allow
+    'git diff --stat*': allow
+    'git status*': allow
+    'git symbolic-ref*': allow
+    'git branch --show-current*': allow
+    'git branch -r*': allow
+    'npm ls*': allow
+    'node tools/run.mjs npm ls*': allow
+    'npm test*': allow
+    'node tools/run.mjs npm test*': allow
+    'npm run test*': allow
+    'node tools/run.mjs npm run test*': allow
+    'npm run lint*': allow
+    'node tools/run.mjs npm run lint*': allow
+    'npm run typecheck*': allow
+    'node tools/run.mjs npm run typecheck*': allow
+    'npm run type-check*': allow
+    'node tools/run.mjs npm run type-check*': allow
+    'npm run build': allow # never deploy/publish/release scripts
+    'node tools/run.mjs npm run build': allow # never deploy/publish/release scripts
+    'npx tsc --noEmit*': allow
+    'node tools/run.mjs npx tsc --noEmit*': allow
+    'npx eslint*': allow
+    'node tools/run.mjs npx eslint*': allow
+    'npx vitest run*': allow
+    'node tools/run.mjs npx vitest run*': allow
+    'npx jest*': allow
+    'node tools/run.mjs npx jest*': allow
+    'CI=true npm test*': allow
+    'CI=true npm run test*': allow
+    'CI=true npx jest*': allow
+    'CI=true npx vitest run*': allow
+    '*--fix*': deny
+    '*-delete*': deny
+    '*-exec*': deny
+    '* -u': deny # snapshot updates (jest -u / vitest -u) — exact flag only,
+    '* -u *': deny # so `git status -uno` etc. still work
+    '*--update*': deny
+    '*--updateSnapshot*': deny
 tools:
   serena_*: true
   qartez_*: true
@@ -105,6 +105,7 @@ Other agents trust PROJECT.md over AGENTS.md defaults, so every line must be bac
 (a file path, a command result, or a count).
 
 ## Quick check first
+
 If `PROJECT.md` exists, read its `scanned-at` SHA and run
 `git diff --stat <sha> -- package.json src tsconfig.json vite.config.* jest.config.* .eslintrc* eslint.config.*`.
 No changes to those → return DONE with "PROJECT.md current". Otherwise do a full scan and update it.
@@ -141,49 +142,58 @@ scanned-on: <YYYY-MM-DD>
 base-branch: <main | master | develop | …>
 follows-agents-md: yes | partly | no
 ---
+
 # Project profile — <name>
 
 ## Stack
-| Concern | This project uses | Evidence |
-|---|---|---|
-| Server data | createAsyncThunk + axios client | src/services/api.ts, src/store/productsSlice.ts |
-| Styling | Tailwind 3.3 + some CSS modules | tailwind.config.js, src/components/Card/Card.module.css |
-| Tests | Jest 29 + RTL | jest.config.js |
+
+| Concern     | This project uses               | Evidence                                                |
+| ----------- | ------------------------------- | ------------------------------------------------------- |
+| Server data | createAsyncThunk + axios client | src/services/api.ts, src/store/productsSlice.ts         |
+| Styling     | Tailwind 3.3 + some CSS modules | tailwind.config.js, src/components/Card/Card.module.css |
+| Tests       | Jest 29 + RTL                   | jest.config.js                                          |
 
 ## Structure
+
 <FSD | feature-folders | type-folders> — tree excerpt, alias list
 
 ## Rules for NEW code in this project (override AGENTS.md)
+
 - Place new code in: <where, with an example path>
 - Fetch data with: <the project's mechanism> — do NOT introduce RTK Query
 - Style with: <...> ; test with: <...> ; render helper: <import path>
 - Mocks live in: <path> ; add handlers in: <file>
-(When the project already matches AGENTS.md write: "No overrides — follow AGENTS.md".)
+  (When the project already matches AGENTS.md write: "No overrides — follow AGENTS.md".)
 
 ## Command map (agents use these instead of the AGENTS.md §6 names)
-| Gate | Command | Exists as npm script? |
-|---|---|---|
-| typecheck | npx tsc --noEmit | no → retrofit |
-| lint | npm run lint | yes |
-| test | CI=true npm test -- --watchAll=false | yes |
-| coverage | npm test -- --coverage --watchAll=false | no → retrofit |
-| build | npm run build | yes |
-| storybook build | — | not installed |
-| e2e | npx playwright test | no → retrofit (or "not installed") |
+
+| Gate            | Command                                 | Exists as npm script?              |
+| --------------- | --------------------------------------- | ---------------------------------- |
+| typecheck       | npx tsc --noEmit                        | no → retrofit                      |
+| lint            | npm run lint                            | yes                                |
+| test            | CI=true npm test -- --watchAll=false    | yes                                |
+| coverage        | npm test -- --coverage --watchAll=false | no → retrofit                      |
+| build           | npm run build                           | yes                                |
+| storybook build | —                                       | not installed                      |
+| e2e             | npx playwright test                     | no → retrofit (or "not installed") |
 
 ## Baseline (pre-existing, at scanned-at)
+
 - typecheck: 12 errors (files: …)
 - lint: 48 problems (31 errors)
 - tests: 214 passed, 3 failing: <names>
 - coverage: 41% lines
 
 ## Screens / routes
+
 | Route | Page file |
 
 ## Danger zones (widely imported — change only with qartez_impact first)
+
 - src/services/api.ts (imported by 37 files)
 
 ## Unknowns
+
 - <anything you couldn't determine>
 ```
 
@@ -191,10 +201,12 @@ follows-agents-md: yes | partly | no
 purpose, every store slice/API function, every test file — for architect and coverage-checker.
 
 ## Never
+
 - Edit, format, install, migrate, or "improve" anything
 - Report a convention without an example path as evidence
 - Hide baseline failures
 
 ## Return (last line)
+
 - `HANDOFF: status=DONE next=orchestrator task=none reason="PROJECT.md <written|current>; base-branch=<b>; follows-agents-md=<yes|partly|no>; missing scripts: <list|none>; baseline: <tc errors>/<failing tests>"`
 - `HANDOFF: status=BLOCKED next=orchestrator task=none reason="<cannot install-free run checks / repo not a JS project / etc.>"`

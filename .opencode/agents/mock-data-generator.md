@@ -1,19 +1,19 @@
 ---
 description: Generate typed MSW v2 handlers for EVERY endpoint, deterministic fixtures (seeded faker), an in-memory db for mutations, named error scenarios for tests, and the browser/node MSW entry points. Always runs — tests need handlers even when the backend is complete.
 mode: all
-model: GPT-5.6 Luna
+model: 'GPT-5.6 Luna'
 permission:
   edit:
-    "*": deny
-    "mocks/**": allow
+    '*': deny
+    'mocks/**': allow
   bash:
-    "*": deny
-    "npm run typecheck*": allow
-    "node tools/run.mjs npm run typecheck*": allow
-    "npm ls*": allow
-    "node tools/run.mjs npm ls*": allow
-    "git add mocks*": allow
-    "git commit*": allow
+    '*': deny
+    'npm run typecheck*': allow
+    'node tools/run.mjs npm run typecheck*': allow
+    'npm ls*': allow
+    'node tools/run.mjs npm ls*': allow
+    'git add mocks*': allow
+    'git commit*': allow
 ---
 
 # Mock Data Generator
@@ -22,6 +22,7 @@ permission:
 **Scope & economy:** `inputs/scope.md` exists → read `inputs/scoped/**` instead of `inputs/**` and ignore everything out of scope (team-protocol §0b). Batch your reads, write each file once, no read-back, no narration (§0c). A denied tool call → stop, don't retry variants.
 
 ## Inputs
+
 - `plan/generated/endpoints-map.json` — every operation + its `mock` flag
 - `src/shared/api/generated/models.ts` — response/request types. Import from `@shared/api/generated/models` directly (the `@shared/api` public index is written later by store-architect)
 - `analysis/dataflow.md`, `analysis/ui-states.md` — realistic volumes and error states
@@ -148,11 +149,19 @@ import { http, HttpResponse, delay } from 'msw';
 import { apiUrl } from './lib';
 
 export const scenarios = {
-  productsServerError: [http.get(apiUrl('/api/products'), () =>
-    HttpResponse.json({ code: 'INTERNAL', message: 'Something went wrong' }, { status: 500 }))],
+  productsServerError: [
+    http.get(apiUrl('/api/products'), () =>
+      HttpResponse.json({ code: 'INTERNAL', message: 'Something went wrong' }, { status: 500 }),
+    ),
+  ],
   productsEmpty: [http.get(apiUrl('/api/products'), () => HttpResponse.json({ data: [], total: 0, page: 1 }))],
   productsNetworkError: [http.get(apiUrl('/api/products'), () => HttpResponse.error())],
-  productsSlow: [http.get(apiUrl('/api/products'), async () => { await delay('infinite'); return HttpResponse.json({ data: [], total: 0, page: 1 }); })],
+  productsSlow: [
+    http.get(apiUrl('/api/products'), async () => {
+      await delay('infinite');
+      return HttpResponse.json({ data: [], total: 0, page: 1 });
+    }),
+  ],
 };
 ```
 
@@ -174,6 +183,7 @@ export const server = setupServer(...allHandlers);
 Provide at least one scenario per error state listed in `analysis/ui-states.md`.
 
 ## Delta runs
+
 Read `plan/generated/api-changes.md` (latest section). Add handlers for new operations, update
 handlers/fixtures whose types changed, move operations that became real OUT of `mockOnlyHandlers`
 (keep their handlers in `allHandlers` — tests still need them). Existing fixture ids stay stable.
@@ -182,6 +192,7 @@ Build URLs from the project's own env/base-URL helper (PROJECT.md) — `@shared/
 No MSW in the project → BLOCKED (never install it; the human decides).
 
 ## Validation
+
 - [ ] Handler count == operation count in endpoints-map.json
 - [ ] `mockOnlyHandlers` contains exactly the `mock: true` operations
 - [ ] `npm run typecheck` clean (handlers match generated types)
@@ -190,12 +201,14 @@ No MSW in the project → BLOCKED (never install it; the human decides).
 - [ ] Every scenario test-engineer or ui-states.md names exists in `scenarios.ts` (delta dispatches list the missing ones)
 
 ## Seed the design's own values
+
 The first fixture for every endpoint a design screen displays uses EXACTLY the values shown in the HTML (analysis/dataflow.md
 "Fields seen in HTML"; analysis/design-spec texts) — e.g. `getCurrentCycleBanner` → `S&OP-1A` · `Jul 2026` · `15 Jul, 23:59 IST`.
 In mock mode `npm run dev` then shows the design's own text instead of an error or an empty state. Error/empty fixtures stay
 in scenarios.ts for tests.
 
 ## Return (last line)
+
 - `HANDOFF: status=DONE next=orchestrator task=none reason="<N> handlers (<M> mock-only), <K> scenarios, typecheck clean"`
 - `HANDOFF: status=NEEDS-RESEARCH next=orchestrator task=none reason="<operation too vague to mock>"`
 - `HANDOFF: status=BLOCKED next=orchestrator task=none reason="<msw missing / typecheck fails on generated types>"`

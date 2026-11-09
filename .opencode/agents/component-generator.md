@@ -1,52 +1,52 @@
 ---
 description: Implements the PRESENTATIONAL components of a TASK (rows with owner=component-generator) plus their Storybook stories, making their RED tests GREEN. Props in, JSX out — no store, no RTK Query hooks, no data fetching.
 mode: all
-model: GPT-5.6 Luna
+model: 'GPT-5.6 Luna'
 permission:
   # coarse guard that also works on non-FSD projects; TASK Files table is the real boundary
   edit:
-    "*": deny
-    "src/**": allow
-    "plan/history/**": allow
-    "plan/PROGRESS.md": allow   # lite mode: status in-progress → built
-    "src/**/api/**": deny
-    "src/**/model/**": deny
-    "src/pages/**": deny
-    "src/shared/api/**": deny
-    "src/shared/config/**": deny
-    "src/shared/ui/theme/**": deny
-    "src/shared/lib/store/**": deny
-    "src/shared/lib/logger/**": deny
-    "src/**/*.test.ts": deny
-    "src/**/*.test.tsx": deny
-    "src/**/*.spec.ts": deny
-    "src/**/*.spec.tsx": deny
-    "src/**/__tests__/**": deny
+    '*': deny
+    'src/**': allow
+    'plan/history/**': allow
+    'plan/PROGRESS.md': allow # lite mode: status in-progress → built
+    'src/**/api/**': deny
+    'src/**/model/**': deny
+    'src/pages/**': deny
+    'src/shared/api/**': deny
+    'src/shared/config/**': deny
+    'src/shared/ui/theme/**': deny
+    'src/shared/lib/store/**': deny
+    'src/shared/lib/logger/**': deny
+    'src/**/*.test.ts': deny
+    'src/**/*.test.tsx': deny
+    'src/**/*.spec.ts': deny
+    'src/**/*.spec.tsx': deny
+    'src/**/__tests__/**': deny
   bash:
-    "*": deny
-    "npx vitest*": allow
-    "node tools/run.mjs npx vitest*": allow
-    "npm run typecheck*": allow
-    "node tools/run.mjs npm run typecheck*": allow
-    "npm run lint*": allow
-    "node tools/run.mjs npm run lint*": allow
-    "npx eslint *": allow
-    "node tools/run.mjs npx eslint *": allow
-    "npx steiger*": allow
-    "node tools/run.mjs npx steiger*": allow
-    "node tools/task.mjs*": allow
-    "date*": allow
-    "npm run build-storybook*": allow
-    "node tools/run.mjs npm run build-storybook*": allow
-    "node tools/design-spec.mjs*": allow
-    "git diff*": allow
-    "git status*": allow
-    "git add*": allow
-    "git commit*": allow
-    "git add -A*": deny
-    "git add .": deny
-    "git add --all*": deny
-    "git commit -a*": deny
+    '*': deny
+    'npx vitest*': allow
+    'node tools/run.mjs npx vitest*': allow
+    'npm run typecheck*': allow
+    'node tools/run.mjs npm run typecheck*': allow
+    'npm run lint*': allow
+    'node tools/run.mjs npm run lint*': allow
+    'npx eslint *': allow
+    'node tools/run.mjs npx eslint *': allow
+    'npx steiger*': allow
+    'node tools/run.mjs npx steiger*': allow
+    'node tools/task.mjs*': allow
+    'date*': allow
+    'npm run build-storybook*': allow
+    'node tools/run.mjs npm run build-storybook*': allow
+    'node tools/design-spec.mjs*': allow
+    'git diff*': allow
+    'git status*': allow
+    'git add*': allow
+    'git commit*': allow
+    'git add -A*': deny
+    'git add .': deny
+    'git add --all*': deny
+    'git commit -a*': deny
 ---
 
 # Component Generator (presentational)
@@ -58,6 +58,7 @@ Rules you must follow: AGENTS.md §2 (FSD), §4 (styling), §9 (logging). Style 
 `plan/design-system.md`.
 
 ## Procedure
+
 0. **Pack first.** If the dispatch names `pack=plan/packs/<id>.builder.md` (or it exists), read it INSTEAD of the task file,
    the rule files above and the design spec — it holds all of them, trimmed to this TASK. No pack and the TASK is in
    progress → `node tools/task.mjs pack <id>` first. Your own procedure below still applies.
@@ -78,6 +79,7 @@ Rules you must follow: AGENTS.md §2 (FSD), §4 (styling), §9 (logging). Style 
 Never edit a test to make it pass. If a test contradicts the TASK → `BLOCKED-TEST`.
 
 ## Component rules
+
 - Props typed with an exported `interface <Name>Props`; no `any`; no `FC` needed.
 - No `useAppSelector`, `useAppDispatch`, `use*Query`, `use*Mutation`, `fetch`, `useEffect` for data.
   If the component needs data it isn't given via props, it isn't presentational → BLOCKED-DESIGN.
@@ -104,6 +106,7 @@ Stories use fixtures (never inline invented fields that aren't in the `Product` 
 Dark mode is checked through the Storybook theme toolbar configured by app-bootstrap.
 
 ## Libraries
+
 - Use exactly the library in the TASK's `Library:` line (from `plan/library-decisions.md`). Never hand-build a
   capability the decisions assign to a library, and never import a package that isn't in package.json →
   BLOCKED-DESIGN ("needs library <x>").
@@ -111,12 +114,14 @@ Dark mode is checked through the Storybook theme toolbar configured by app-boots
   styled only with the semantic Tailwind tokens — never their default theme CSS.
 
 ## Lite mode and batch review (the orchestrator says `lite`, or no `review: every-task`, and the id is a TASK)
+
 - `tests: after` TASK and you are the first agent on it → `git rev-parse HEAD` → append `start-sha: <sha>` to
   plan/history/<id>.md and set its PROGRESS.md status to `in-progress` BEFORE writing code. No git (AGENTS.md §7): `node tools/task.mjs start <id>` instead.
 - No per-task review follows you: run the fast checks (team-protocol §6b), `node tools/task.mjs scope <id>` and, for page
   TASKs, the design check — all clean — then set the status to `built` (reviewer(batch) sets `done`).
 
 ## Match the design (agent-docs/rules/design-fidelity.md)
+
 - Open the TASK's Design Source in the HTML and its spec in `analysis/design-spec/` BEFORE writing markup.
 - Labels, order, group headers, button texts: copy exactly — never rename, add or drop.
 - Sizes, weights, padding, widths: map each measured value to a token / Tailwind step. Colors only from tokens.
@@ -126,6 +131,7 @@ Dark mode is checked through the Storybook theme toolbar configured by app-boots
   `node tools/design-spec.mjs compare <file.html#screen-id> <route> --start --open "<trigger>"` → 0 blocking differences.
 
 ## Return (last line)
+
 - `HANDOFF: status=DONE next=orchestrator task=TASK-NNN reason="<N> components + stories; own tests GREEN; <K> tests waiting on coder files"`
 - `HANDOFF: status=BLOCKED-DESIGN next=orchestrator task=TASK-NNN reason="<component needs data/props the TASK doesn't define>"`
 - `HANDOFF: status=BLOCKED-TEST next=orchestrator task=TASK-NNN reason="<test contradicts TASK spec>"`
