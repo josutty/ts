@@ -6,7 +6,18 @@ import globals from 'globals';
 import prettierConfig from 'eslint-config-prettier/flat';
 
 export default tseslint.config(
-  { ignores: ['dist', 'storybook-static', 'coverage', 'public', 'playwright-report', 'test-results', 'src/shared/api/generated'] },
+  {
+    ignores: [
+      'dist',
+      'storybook-static',
+      'coverage',
+      'public',
+      'playwright-report',
+      'test-results',
+      'tools',
+      'src/shared/api/generated',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strict,
   jsxA11y.flatConfigs.recommended,
@@ -14,7 +25,11 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
     plugins: { 'react-hooks': reactHooks },
-    rules: { ...reactHooks.configs.recommended.rules, '@typescript-eslint/no-explicit-any': 'error', 'no-console': 'error' },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      '@typescript-eslint/no-explicit-any': 'error',
+      'no-console': 'error',
+    },
   },
   {
     files: ['src/**/*.tsx'],
@@ -22,13 +37,22 @@ export default tseslint.config(
     rules: {
       'max-lines': ['error', { max: 250 }],
       'no-restricted-globals': ['error', { name: 'fetch', message: 'Use RTK Query hooks (AGENTS.md §3)' }],
-      'no-restricted-imports': ['error', { paths: [
-        { name: 'axios', message: 'Use RTK Query' },
-        { name: '@shared/api/baseApi', message: 'Components use entity/feature hooks, not baseApi' },
-      ] }],
-      'no-restricted-syntax': ['error',
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            { name: 'axios', message: 'Use RTK Query' },
+            { name: '@shared/api/baseApi', message: 'Components use entity/feature hooks, not baseApi' },
+          ],
+        },
+      ],
+      'no-restricted-syntax': [
+        'error',
         { selector: "JSXAttribute[name.name='style']", message: 'Tailwind classes only (AGENTS.md §4)' },
-        { selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']", message: 'XSS risk: render text, or sanitize in shared/lib with a reviewed library' },
+        {
+          selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+          message: 'XSS risk: render text, or sanitize in shared/lib with a reviewed library',
+        },
       ],
     },
   },
