@@ -1,0 +1,11 @@
+{
+  "text": [
+    ["fg", "surface"],
+    ["fg-muted", "surface"],
+    ["fg", "surface-muted"],
+    ["primary", "surface"],
+    ["primary-fg", "primary"],
+    ["success-fg", "success"]
+  ],
+  "nonText": [["focus", "surface"]]
+}

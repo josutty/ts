@@ -1,0 +1,59 @@
+:root {
+  --color-surface: 255 255 255;
+  --color-surface-muted: 246 248 252;
+  --color-fg: 23 42 74;
+  --color-fg-muted: 98 113 140;
+  --color-border: 227 233 242;
+  --color-border-strong: 203 213 225;
+  --color-primary: 0 24 104;
+  --color-primary-fg: 255 255 255;
+  --color-danger: 230 47 50;
+  --color-danger-fg: 255 255 255;
+  --color-success: 21 128 61;
+  --color-success-fg: 255 255 255;
+  --color-warning: 193 120 0;
+  --color-warning-fg: 129 91 19;
+  --color-warning-soft: 255 249 237;
+  --color-warning-border: 243 216 165;
+  --color-accent: 230 47 50;
+  --color-primary-soft: 238 243 252;
+  --color-inverse: 0 24 104;
+  --color-inverse-muted: 98 113 140;
+  --color-focus: 230 47 50;
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius-control: 0.5625rem;
+  --radius-card: 1.25rem;
+  --gradient-login-hero: linear-gradient(145deg, rgb(238 243 252), rgb(255 255 255));
+  --gradient-page: none;
+  --shadow-card: 0 8px 28px rgb(14 39 88 / 0.055);
+  color-scheme: light;
+}
+
+.dark {
+  --color-surface: 255 255 255;
+  --color-surface-muted: 246 248 252;
+  --color-fg: 23 42 74;
+  --color-fg-muted: 98 113 140;
+  --color-border: 227 233 242;
+  --color-border-strong: 203 213 225;
+  --color-primary: 0 24 104;
+  --color-primary-fg: 255 255 255;
+  --color-danger: 230 47 50;
+  --color-danger-fg: 255 255 255;
+  --color-success: 21 128 61;
+  --color-success-fg: 255 255 255;
+  --color-warning: 193 120 0;
+  --color-warning-fg: 129 91 19;
+  --color-warning-soft: 255 249 237;
+  --color-warning-border: 243 216 165;
+  --color-accent: 230 47 50;
+  --color-primary-soft: 238 243 252;
+  --color-inverse: 0 24 104;
+  --color-inverse-muted: 98 113 140;
+  --color-focus: 230 47 50;
+  --gradient-login-hero: linear-gradient(145deg, rgb(238 243 252), rgb(255 255 255));
+  --gradient-page: none;
+  --shadow-card: 0 8px 28px rgb(14 39 88 / 0.055);
+  color-scheme: light;
+}
