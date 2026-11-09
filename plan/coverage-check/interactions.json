@@ -1,0 +1,23 @@
+{
+  "file": "inputs/ux/dealer.html",
+  "screens": [
+    {
+      "name": "#app",
+      "sig": "#app",
+      "via": null,
+      "bar": {
+        "sel": ".demo-strip",
+        "height": 36,
+        "background": "rgb(255, 246, 232)",
+        "buttons": [],
+        "lines": [
+          "· Simulated vehicle telemetry and driver scores · Not connected to live VECV systems",
+          "PROTOTYPE"
+        ]
+      }
+    }
+  ],
+  "overlays": [],
+  "inPlace": 1,
+  "none": 0
+}
