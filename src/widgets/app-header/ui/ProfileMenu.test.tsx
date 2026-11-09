@@ -1,9 +1,11 @@
-import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@test/test-utils';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ProfileMenu } from './ProfileMenu';
 
 describe('ProfileMenu', () => {
+  afterEach(cleanup);
+
   const renderMenu = (overrides: Partial<Parameters<typeof ProfileMenu>[0]> = {}) =>
     render(<ProfileMenu username="admin" onNavigate={vi.fn()} onSignOut={vi.fn()} onClose={vi.fn()} {...overrides} />);
 

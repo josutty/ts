@@ -51,6 +51,7 @@ export function AppHeader({ username, activePage, onNavigate, onSignOut }: AppHe
           ))}
         </nav>
         <div ref={profileRef} className="relative">
+          <span className="mr-2 text-xs font-semibold text-muted">Signed in as</span>
           <button
             ref={profileButtonRef}
             className="rounded-md px-3 py-2 text-sm font-semibold text-fg hover:bg-muted focus-visible:ring-2 focus-visible:ring-primary"

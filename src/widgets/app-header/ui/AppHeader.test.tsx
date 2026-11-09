@@ -1,12 +1,20 @@
-import { describe, expect, it, vi } from 'vitest';
-import { renderWithProviders, screen, within } from '@test/test-utils';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { AppHeader } from './AppHeader';
 
 describe('AppHeader', () => {
-  const renderHeader = (overrides: Partial<Parameters<typeof AppHeader>[0]> = {}) =>
-    renderWithProviders(
-      <AppHeader username="admin" activePage="Home" onNavigate={vi.fn()} onSignOut={vi.fn()} {...overrides} />,
-    );
+  afterEach(cleanup);
+
+  const renderHeader = (overrides: Partial<Parameters<typeof AppHeader>[0]> = {}) => {
+    const user = userEvent.setup();
+    return {
+      user,
+      ...render(
+        <AppHeader username="admin" activePage="Home" onNavigate={vi.fn()} onSignOut={vi.fn()} {...overrides} />,
+      ),
+    };
+  };
 
   it('renders the authenticated header and navigation labels in order', () => {
     renderHeader();
