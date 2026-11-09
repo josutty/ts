@@ -1,6 +1,6 @@
 | TASK     | Slice                    | Goal                                      | Depends on | Status |
 | -------- | ------------------------ | ----------------------------------------- | ---------- | ------ |
-| TASK-001 | shared/ui                | Shared primitives and demo chrome          | —          | open   |
+| TASK-001 | shared/ui | Shared primitives and demo chrome | — | done |
 | TASK-002 | widgets/app-header       | Authenticated header and profile menu      | TASK-001  | open   |
 | TASK-003 | features/authenticate    | Login form                                 | TASK-001  | open   |
 | TASK-004 | pages/login              | Login route and composition                | TASK-002, TASK-003 | open |
