@@ -6,7 +6,7 @@
 | TASK-004 | pages/login | Login route and composition | TASK-002, TASK-003 | done |
 | TASK-005 | widgets/selected-vehicle | Vehicle visual and selected preview | TASK-001 | done |
 | TASK-006 | widgets/vehicle-explorer | Vehicle search and category selection | TASK-001 | done |
-| TASK-007 | widgets/fleet-overview   | Fleet KPI cards                            | TASK-001  | open   |
+| TASK-007 | widgets/fleet-overview | Fleet KPI cards | TASK-001 | done |
 | TASK-008 | widgets/trip-context     | Journey progress and context banner        | TASK-001  | open   |
 | TASK-009 | widgets/trip-setup       | Trip setup dialog                           | TASK-005, TASK-008 | open |
 | TASK-010 | widgets/pravah-embed     | Host-owned telemetry boundary              | TASK-001, TASK-008 | open |
