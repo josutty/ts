@@ -220,13 +220,61 @@
 - Screens: analytics
 - Source: `#app > main.main` rendered by `renderAnalytics()`
 - Role hint: page
-- Shows: `Step 4 · Driver performance`, `Driver Analytics`, `Demonstration driver score and trip event summary · <date>`, `↓ Download Certificate`, `Exit to Home`, TripContextBanner, Driver Details, `Safe Driver`, Driver Score `88 / 100`, `Great Driving!`, `Keep it up!`, Events During Trip, Driving Style Breakdown, `Illustrative scores across five dimensions`
+- Shows, in order: `Step 4 · Driver performance`, `Driver Analytics`, `Demonstration driver score and trip event summary · <date>`, `↓ Download Certificate`, `Exit to Home`, TripContextBanner, Driver Details, Driver Score, Events During Trip, Driving Style Breakdown, Driving Style, and the footer demo note. The authenticated analytics render measures `John Doe`, `Example Logistics`, `Eicher Pro 3015`, `Chennai → Bengaluru`, `88`, `/ 100`, `Safe Driver`, `Great Driving!`, `Keep it up!`, `7 total`, event counts `1, 3, 2, 0, 0, 1`, `Safety`, `Efficiency`, `Fuel Economy`, `Idle Management`, `Speed`, `Illustrative scores across five dimensions`, `★★★★☆`, `Very Good`, and the exact sample-value notice.
 - Props: `result: DriverScoreResult`; `onDownload: () => void`; `onExit: () => void`
-- Interactions: Download Certificate; Exit to Home; score data is tied to submitted trip
-- A11y: score has text equivalent; chart has accessible label; headings and metric labels are semantic
+- Interactions: Download Certificate; Exit to Home; score data is tied to submitted trip; score/event values are read-only
+- A11y: score has text equivalent; driving-style visualizations have accessible labels and adjacent text; headings and metric labels are semantic; action buttons have exact accessible names
 - Responsive: analytics top/bottom grids become one column below 900px
 - Reuses: TripProgress, TripContextBanner, DriverDetails, ScoreCard, EventsBreakdown, DrivingStyleBreakdown, Button
-- Design spec: analysis/design-spec/dealer-app.md
+- Design spec: analysis/design-spec/dealer-analytics-app.md
+
+### DriverDetails
+- Screens: analytics
+- Source: `section.panel` containing `h3` exact text `Driver Details`
+- Role hint: presentational
+- Shows: driver avatar `♙`, driver name, `Safe Driver`, and rows `Company`, `Vehicle`, `Route`, `Date`, `Duration`; authenticated sample values are `John Doe`, `Example Logistics`, `Eicher Pro 3015`, `Chennai → Bengaluru`, `10 Nov 2026`, `2h 30m · Demo`
+- Props: `result: DriverScoreResult`; `evaluationDate: string`
+- Interactions: none
+- A11y: semantic heading and labelled metric rows; avatar is decorative when adjacent to the driver name
+- Responsive: detail rows remain readable in the single-column analytics layout below 900px
+- Reuses: Badge
+- Design spec: analysis/design-spec/dealer-analytics-app.md
+
+### ScoreCard
+- Screens: analytics
+- Source: `section.score-box` containing `h3` exact text `Driver Score`
+- Role hint: presentational
+- Shows: score circle `88`, `/ 100`, `Great Driving!`, `Keep it up!`
+- Props: `score: number`; `label: string`; `message: string`
+- Interactions: none
+- A11y: score and denominator are exposed as text; conic circle is supplementary and never the only score indication
+- Responsive: centered score panel in the one-column analytics layout below 900px
+- Reuses: Badge
+- Design spec: analysis/design-spec/dealer-analytics-app.md
+
+### EventsBreakdown
+- Screens: analytics
+- Source: `section.panel` containing `h3` exact text `Events During Trip`
+- Role hint: presentational
+- Shows: `7 total`; rows `Seatbelt Violation` 1, `Harsh Acceleration` 3, `Harsh Braking` 2, `Fast Cornering` 0, `Handbraking` 0, `Overspeeding` 1; bars scale from each count
+- Props: `events: DriverEvent[]`; `total: number`
+- Interactions: none
+- A11y: every bar has an adjacent event label and numeric count; zero remains visible as `0`
+- Responsive: rows fit the analytics column and wrap only when required
+- Reuses: Notice
+- Design spec: analysis/design-spec/dealer-analytics-app.md
+
+### DrivingStyleBreakdown
+- Screens: analytics
+- Source: `section.panel` containing `h3` exact text `Driving Style Breakdown`
+- Role hint: presentational
+- Shows: named dimensions `Safety`, `Efficiency`, `Fuel Economy`, `Idle Management`, `Speed`, the text `Illustrative scores across five dimensions`, plus `Driving Style`, `★★★★☆`, `Very Good`, and the explanatory sentence
+- Props: `metrics: DrivingStyleMetric[]`; `styleLabel: string`; `rating: string`; `summary: string`
+- Interactions: none
+- A11y: radar/star visualization has a text equivalent through named dimensions and rating; do not rely on color alone
+- Responsive: analytics bottom grid becomes one column below 900px
+- Reuses: Notice
+- Design spec: analysis/design-spec/dealer-analytics-app.md
 
 ### DriverScoresPage
 - Screens: scores
@@ -317,7 +365,6 @@
 - Logo image is content, not decorative, because it has the supplied alt text.
 
 ## Open questions
-- Q1 (client): The interaction crawler reached only the initial login state, while the HTML JavaScript defines home, telemetry, analytics and scores. Should those dynamic states be treated as approved screens for production scope and measured with authenticated fixtures?
 - Q2 (client): The FSD doc says the host must not build telemetry dashboards, but the prototype renders Vehicle Health, Key Parameters, Route Visualization and sensor panels. Should production replace all of these with only the Pravah embed placeholder/container?
 - Q3 (client): What are the authoritative route options and route identifiers? The prototype options are `Chennai → Bengaluru`, `Bengaluru → Hyderabad`, `Mumbai → Pune`, `Delhi → Jaipur`, `Kochi → Bengaluru`, `Chennai → Coimbatore`.
 - Q4 (client): What score thresholds justify `Safe Driver`, `Great Driving!`, `Keep it up!`, green styling, and event bars? The prototype does not define meanings.

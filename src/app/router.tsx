@@ -41,6 +41,14 @@ export const router = createBrowserRouter([
     errorElement: <RouteErrorFallback />,
   },
   {
+    path: routes.analytics,
+    lazy: async () => {
+      const { DriverAnalytics } = await import('@pages/analytics');
+      return { Component: DriverAnalytics };
+    },
+    errorElement: <RouteErrorFallback />,
+  },
+  {
     path: routes.notFound,
     element: <NotFoundPage />,
     errorElement: <RouteErrorFallback />,

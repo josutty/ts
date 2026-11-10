@@ -46,7 +46,6 @@ None found.
 |---|---|---|
 | #nav | HomeDrivers Score♙ ▾Signed in as ↪ Sign Out | a state — see the overlays and controls above |
 | #userMenu | Signed in as ↪ Sign Out | a state — see the overlays and controls above |
-| #app > main > section:nth-of-type(1) > div:nth-of-type(2) > div > div | EICHER | a state — see the overlays and controls above |
 
 ## Controls with NO visible change (a human decides: not built yet in the prototype, or an external link?)
 

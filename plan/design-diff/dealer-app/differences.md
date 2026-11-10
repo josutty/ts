@@ -7,19 +7,19 @@ Screenshots: design.png, build.png, visual.png (the design with every area that 
 | Severity | Where | What | Design | Build |
 |---|---|---|---|---|
 | layout | page | card / panel | rgb(255, 255, 255), radius 20px, 460px | missing (no distinct panel) |
-| style | block "Sign in" | corner radius | 20px | 0px |
-| style | text "Smarter journeys. Clearer insights." | font | 44px/700 | 36px/700 |
-| style | text "Smarter journeys. Clearer insights." | color | rgb(0, 24, 104) | rgb(23, 42, 74) |
-| style | text "An intuitive way to explore Eicher vehic" | font | 14px/400 | 15px/400 |
-| style | text "Prototype access only. No real account v" | font | 13px/400 | 14px/400 |
-| style | text "Sign in" | font | 38px/700 | 36px/700 |
-| style | text "Sign in" | color | rgb(0, 24, 104) | rgb(23, 42, 74) |
-| style | text "Use demo credentials to explore the expe" | font | 14px/400 | 15px/400 |
-| style | text "Username" | font | 13px/700 | 14px/700 |
-| style | text "Username" | color | rgb(0, 24, 104) | rgb(23, 42, 74) |
-| style | text "Password" | font | 13px/700 | 14px/700 |
-| style | text "Password" | color | rgb(0, 24, 104) | rgb(23, 42, 74) |
-| style | input "Username" | border colour | rgb(203, 213, 225) | rgb(227, 233, 242) |
-| style | input "Password" | border colour | rgb(203, 213, 225) | rgb(227, 233, 242) |
-| visual | whole page | 12% of the picture looks different — open visual.png (red = different) | page height 900px | page height 900px |
-| visual | area 400–600px from the top | 30% of this strip looks different | see visual.png |  |
+| content | text | "Eicher Digital Operations" | present | missing |
+| content | text | "Smarter journeys. Clearer insights." | present | missing |
+| content | text | "An intuitive way to explore Eicher vehicles, monitor a trip and understand drive" | present | missing |
+| content | text | "Prototype access only. No real account verification or live vehicle data is conn" | present | missing |
+| content | text | "Welcome back" | present | missing |
+| content | text | "Sign in" | present | missing |
+| content | text | "Use demo credentials to explore the experience. Real authentication is not enabl" | present | missing |
+| content | text | "Username" | present | missing |
+| content | text | "Password" | present | missing |
+| data | text | "Demo credentials: admin / admin123. This is not a secure production login." | present | missing |
+| content | text | extra "Driver score not found" | absent | present |
+| content | input "Username" | field | present | missing |
+| content | input "Password" | field | present | missing |
+| content | controls | control "Sign In →" | present | missing |
+| content | controls | extra control "Retry" | absent | present |
+| visual | whole page | 10% of the picture looks different — open visual.png (red = different) | page height 900px | page height 900px |
