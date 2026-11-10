@@ -1,6 +1,6 @@
 ---
 id: TASK-011
-status: open
+status: done
 revision: 1
 tests: first
 depends-on: [TASK-002, TASK-005, TASK-006, TASK-007, TASK-008, TASK-009]

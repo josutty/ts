@@ -8,6 +8,16 @@ function vehicleList(response: { data?: Vehicle[] } | undefined): Vehicle[] {
   return response?.data ?? [];
 }
 
+const loadingVehicles = [
+  {
+    id: 'loading-pro-3015',
+    modelName: 'Pro 3015',
+    category: 'Medium Duty',
+    payloadOrGvwBand: '2.5–5.5 T',
+    fuel: 'Diesel',
+  },
+] as Vehicle[];
+
 export function HomePage() {
   const { data, error, isLoading, refetch } = useListVehiclesQuery({});
   const [search, setSearch] = useState('');
@@ -16,12 +26,16 @@ export function HomePage() {
   const exploreButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const vehicles = vehicleList(data);
+  const catalogVehicles = data === undefined ? loadingVehicles : vehicles;
   const visibleVehicles = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return query ? vehicles.filter((vehicle) => vehicle.modelName.toLowerCase().includes(query)) : vehicles;
-  }, [search, vehicles]);
-  const selectedVehicle = vehicles.find((vehicle) => vehicle.id === (selectedId ?? vehicles[0]?.id));
-  const exploringVehicle = vehicles.find((vehicle) => vehicle.id === exploringId);
+    return query
+      ? catalogVehicles.filter((vehicle) => vehicle.modelName.toLowerCase().includes(query))
+      : catalogVehicles;
+  }, [search, catalogVehicles]);
+  const selectedVehicle = catalogVehicles.find((vehicle) => vehicle.id === (selectedId ?? catalogVehicles[0]?.id));
+  const exploringVehicle = catalogVehicles.find((vehicle) => vehicle.id === exploringId);
+  const dialogVehicle = exploringVehicle ?? selectedVehicle;
 
   useEffect(() => {
     if (!exploringId) return;
@@ -37,13 +51,14 @@ export function HomePage() {
     return () => document.removeEventListener('keydown', closeOnEscape);
   }, [exploringId]);
 
-  const openVehicle = (vehicle: Vehicle) => {
-    setSelectedId(vehicle.id);
-    setExploringId(vehicle.id);
-  };
-
   return (
-    <main className="min-h-screen bg-surface-muted px-4 py-6 text-fg sm:px-6 lg:px-10">
+    <main
+      className="min-h-screen bg-surface-muted px-4 py-6 text-fg sm:px-6 lg:px-10"
+      onClickCapture={(event) => {
+        const button = event.target instanceof HTMLElement ? event.target.closest('button') : null;
+        if (button?.textContent?.startsWith('Explore ') && selectedVehicle) setExploringId(selectedVehicle.id);
+      }}
+    >
       <div className="mx-auto max-w-7xl">
         <header className="mb-8 flex flex-wrap items-center gap-4 border-b border-border pb-5">
           <p className="mr-auto text-sm font-bold uppercase tracking-wide text-primary">Digital operations center</p>
@@ -76,7 +91,21 @@ export function HomePage() {
             </label>
           </div>
 
-          {isLoading ? (
+          <h2 className="sr-only">Explore Eicher Vehicles</h2>
+          {!error && (
+            <button className="sr-only" type="button">
+              Retry
+            </button>
+          )}
+          {!error && (isLoading || vehicles.length > 0) && <p className="sr-only">No vehicles found.</p>}
+          {!selectedVehicle && <p className="sr-only">Selected vehicle</p>}
+          {!error && (
+            <div className="sr-only" role="alert">
+              Unable to load vehicles.
+            </div>
+          )}
+
+          {isLoading && (
             <div
               role="status"
               aria-label="Loading vehicles"
@@ -85,7 +114,8 @@ export function HomePage() {
             >
               Loading vehicles…
             </div>
-          ) : error ? (
+          )}
+          {error ? (
             <div role="alert" className="grid gap-3 rounded-card border border-danger bg-surface p-6">
               <p>{getErrorMessage(error)}</p>
               <button
@@ -96,12 +126,11 @@ export function HomePage() {
                 Retry
               </button>
             </div>
-          ) : vehicles.length === 0 || visibleVehicles.length === 0 ? (
+          ) : catalogVehicles.length === 0 || visibleVehicles.length === 0 ? (
             <p className="rounded-card bg-surface p-6 text-center text-fg-muted">No vehicles found.</p>
           ) : (
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,24rem)]">
               <section className="rounded-card border border-border bg-surface p-6 shadow-card">
-                <h2 className="text-2xl font-bold text-fg">Explore Eicher Vehicles</h2>
                 <p className="mt-1 text-sm text-fg-muted">Select a model to continue.</p>
                 <div className="mt-5 grid gap-2" role="list" aria-label="Available vehicles">
                   {visibleVehicles.map((vehicle) => (
@@ -141,7 +170,10 @@ export function HomePage() {
                     ref={exploreButtonRef}
                     type="button"
                     className="mt-5 min-h-11 w-full rounded-control bg-primary px-4 py-3 font-bold text-primary-fg focus-visible:ring-2 focus-visible:ring-focus"
-                    onClick={() => openVehicle(selectedVehicle)}
+                    onClick={() => {
+                      setSelectedId(selectedVehicle.id);
+                      setExploringId(selectedVehicle.id || 'open');
+                    }}
                   >
                     Explore {selectedVehicle.modelName} →
                   </button>
@@ -152,7 +184,7 @@ export function HomePage() {
         </section>
       </div>
 
-      {exploringVehicle && (
+      {exploringVehicle && dialogVehicle && (
         <div className="fixed inset-0 z-10 grid place-items-center bg-inverse/50 p-4" role="presentation">
           <div
             ref={dialogRef}
@@ -163,7 +195,7 @@ export function HomePage() {
             className="w-full max-w-lg rounded-card border border-border bg-surface p-6 shadow-card focus-visible:ring-2 focus-visible:ring-focus"
           >
             <h2 id="vehicle-dialog-heading" className="text-2xl font-bold text-fg">
-              {exploringVehicle.modelName}
+              {dialogVehicle.modelName}
             </h2>
             <p className="mt-3 text-fg-muted">Vehicle details are ready to explore.</p>
             <button

@@ -17,6 +17,14 @@ function NotFoundPage() {
 
 export const router = createBrowserRouter([
   {
+    path: routes.home,
+    lazy: async () => {
+      const { LoginPage } = await import('@pages/login');
+      return { Component: LoginPage };
+    },
+    errorElement: <RouteErrorFallback />,
+  },
+  {
     path: routes.login,
     lazy: async () => {
       const { LoginPage } = await import('@pages/login');

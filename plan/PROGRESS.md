@@ -10,7 +10,7 @@
 | TASK-008 | widgets/trip-context | Journey progress and context banner | TASK-001 | done |
 | TASK-009 | widgets/trip-setup | Trip setup dialog | TASK-005, TASK-008 | done |
 | TASK-010 | widgets/pravah-embed | Host-owned telemetry boundary | TASK-001, TASK-008 | done |
-| TASK-011 | pages/home               | Home route and vehicle discovery            | TASK-002, TASK-005, TASK-006, TASK-007, TASK-008, TASK-009 | open |
+| TASK-011 | pages/home | Home route and vehicle discovery | TASK-002, TASK-005, TASK-006, TASK-007, TASK-008, TASK-009 | done |
 | TASK-012 | widgets/score-breakdown  | Driver score detail blocks                 | TASK-001, TASK-008 | open |
 | TASK-013 | widgets/certificate      | Certificate action and print boundary      | TASK-001 | open   |
 | TASK-014 | pages/telemetry          | Telemetry route and score transition       | TASK-002, TASK-008, TASK-010 | open |
