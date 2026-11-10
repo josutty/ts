@@ -2,6 +2,23 @@
 
 Fix only these. Touch only the files in the task's Files table.
 
+### tests (related)
+command: npx vitest related "src/pages/analytics/ui/DriverAnalytics.tsx" "src/pages/analytics/index.ts" "src/app/router.tsx" "src/shared/config/routes.ts" "src/pages/analytics/ui/DriverAnalytics.test.tsx" --run --reporter=dot --passWithNoTests
+   Test Files  1 failed | 15 passed (16)
+        Tests  1 failed | 54 passed (55)
+    payload: { status: 404, code: 'NOT_FOUND', message: 'Score result not found' }
+      message: 'Trip telemetry context not found'
+      message: 'Trip telemetry context not found'
+      message: 'Trip telemetry context not found'
+      message: 'Trip telemetry context not found'
+      message: 'Trip telemetry context not found'
+  ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+   FAIL  src/widgets/selected-vehicle/ui/SelectedVehiclePreview.test.tsx > SelectedVehiclePreview > uses an en dash and T for the payload / GVW band value
+  Error: expect(element).toHaveTextContent()
+  Expected element to have text content:
+  Received:
+   ❯ src/widgets/selected-vehicle/ui/SelectedVehiclePreview.test.tsx:20:21
+
 ### design vs build
 command: node tools/design-spec.mjs compare "inputs/ux/dealer.html#app" /analytics/:tripId --start
   | layout | page | card / panel | rgb(255, 255, 255), radius 20px, 460px | missing (no distinct panel) |
