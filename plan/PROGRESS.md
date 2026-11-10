@@ -13,7 +13,7 @@
 | TASK-011 | pages/home | Home route and vehicle discovery | TASK-002, TASK-005, TASK-006, TASK-007, TASK-008, TASK-009 | done |
 | TASK-012 | widgets/score-breakdown | Driver score detail blocks | TASK-001, TASK-008 | done |
 | TASK-013 | widgets/certificate | Certificate action and print boundary | TASK-001 | done |
-| TASK-014 | pages/telemetry          | Telemetry route and score transition       | TASK-002, TASK-008, TASK-010 | open |
+| TASK-014 | pages/telemetry | Telemetry route and score transition | TASK-002, TASK-008, TASK-010 | in-progress |
 | TASK-015 | pages/analytics          | Analytics route and score result           | TASK-002, TASK-008, TASK-012, TASK-013 | open |
 | TASK-016 | widgets/score-history    | Searchable score history table             | TASK-001, TASK-013 | open |
 | TASK-017 | pages/driver-scores      | Driver scores route                         | TASK-002, TASK-016 | open |

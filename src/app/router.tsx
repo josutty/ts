@@ -33,6 +33,14 @@ export const router = createBrowserRouter([
     errorElement: <RouteErrorFallback />,
   },
   {
+    path: routes.telemetry,
+    lazy: async () => {
+      const { TelemetryPage } = await import('@pages/telemetry');
+      return { Component: TelemetryPage };
+    },
+    errorElement: <RouteErrorFallback />,
+  },
+  {
     path: routes.notFound,
     element: <NotFoundPage />,
     errorElement: <RouteErrorFallback />,

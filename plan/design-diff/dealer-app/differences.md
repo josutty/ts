@@ -6,15 +6,20 @@ Screenshots: design.png, build.png, visual.png (the design with every area that 
 
 | Severity | Where | What | Design | Build |
 |---|---|---|---|---|
-| style | block "Prototype access only. No real account v" | corner radius | 10px | 6px |
+| layout | page | card / panel | rgb(255, 255, 255), radius 20px, 460px | missing (no distinct panel) |
+| style | block "Sign in" | corner radius | 20px | 0px |
+| style | text "Smarter journeys. Clearer insights." | font | 44px/700 | 36px/700 |
 | style | text "Smarter journeys. Clearer insights." | color | rgb(0, 24, 104) | rgb(23, 42, 74) |
-| style | text "Prototype access only. No real account v" | font | 13px/400 | 15px/400 |
+| style | text "An intuitive way to explore Eicher vehic" | font | 14px/400 | 15px/400 |
+| style | text "Prototype access only. No real account v" | font | 13px/400 | 14px/400 |
+| style | text "Sign in" | font | 38px/700 | 36px/700 |
 | style | text "Sign in" | color | rgb(0, 24, 104) | rgb(23, 42, 74) |
+| style | text "Use demo credentials to explore the expe" | font | 14px/400 | 15px/400 |
 | style | text "Username" | font | 13px/700 | 14px/700 |
 | style | text "Username" | color | rgb(0, 24, 104) | rgb(23, 42, 74) |
 | style | text "Password" | font | 13px/700 | 14px/700 |
 | style | text "Password" | color | rgb(0, 24, 104) | rgb(23, 42, 74) |
 | style | input "Username" | border colour | rgb(203, 213, 225) | rgb(227, 233, 242) |
 | style | input "Password" | border colour | rgb(203, 213, 225) | rgb(227, 233, 242) |
-| visual | whole page | 14% of the picture looks different — open visual.png (red = different) | page height 900px | page height 900px |
-| visual | area 400–600px from the top | 27% of this strip looks different | see visual.png |  |
+| visual | whole page | 12% of the picture looks different — open visual.png (red = different) | page height 900px | page height 900px |
+| visual | area 400–600px from the top | 30% of this strip looks different | see visual.png |  |
