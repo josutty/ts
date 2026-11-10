@@ -1,6 +1,6 @@
 ---
 id: TASK-003
-status: open
+status: done
 revision: 1
 tests: first
 depends-on: [TASK-001]
@@ -13,6 +13,8 @@ created: 2026-11-09
 | src/features/authenticate/ui/LoginForm.tsx | connected | coder | new |
 | src/features/authenticate/index.ts | public api | coder | new |
 | src/features/authenticate/ui/LoginForm.test.tsx | test | test-engineer | new |
+| test/setup.ts | test harness | test-engineer | edit |
+| test/test-utils.tsx | test harness | test-engineer | new |
 ## Integration contract
 Use `useLoginUserMutation`; map errors with `getErrorMessage`; update session through the planned auth contract. Use react-hook-form/zod schema owned by this slice if needed. No fetch.
 ## Components
